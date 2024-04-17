@@ -30,7 +30,7 @@ return result.data.rows;
 // console.log("SQL in GetApiData",sql);
 // alert("Couldn't get data from Database")
 // if error, return 0 rows
-console.log(apiUrl)
+// console.log(apiUrl)
 return ["ERROR"];
 })};
 
@@ -46,6 +46,6 @@ export const GetApiDataUpdate = (sql, fileName) => {
     // console.log("SQL in GetApiData",sql);
     // alert("Couldn't get data from Database")
     // if error, return 0 rows
-    console.log(apiUrl)
+    // console.log(apiUrl)
     return ["ERROR"];
     })};

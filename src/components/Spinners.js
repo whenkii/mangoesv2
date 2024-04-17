@@ -11,7 +11,7 @@ export function AllSpinners({props}) {
         <Waiting className="d-flex align-items-center justify-content-center">
           {spinnerColors.map((colour,i) => 
             <div key={i} className={`spinner-grow text-${colour}`} role="status">
-              <span className="sr-only">Loading...</span>
+              {/* <span className="sr-only">Loading...</span> */}
             </div> 
           )}
         </Waiting>

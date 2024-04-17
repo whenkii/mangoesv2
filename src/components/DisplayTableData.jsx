@@ -13,7 +13,7 @@ import {accountsContext} from '../contexts/accountsContext'
 
 export default function DisplayTableData({state,comp,id,bgClr}) {
 
-       const navigate = useNavigate();
+const navigate = useNavigate();
 const [accountInfo] = useContext(accountsContext);
 
 let stateVarInitial = state;

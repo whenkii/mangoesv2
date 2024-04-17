@@ -1,35 +1,21 @@
-const http = require("http");
+const https = require("https");
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const router = require("./router.js");
 const webServerConfig = require("../config/web-server.js");
 
+
 let httpServer;
 
 // var   fs = require("fs");
 // const path = require("path");
 
-// var privateKey = fs.readFileSync(path.join(__dirname,'../certs','generated-private-key.txt'), 'utf8');
-// var certificate = fs.readFileSync(path.join(__dirname,'../certs','6b7d09109d01c6d5.pem'), 'utf8');
-
-// const privateKey= fs.readFileSync('./key.pem', 'utf8');
-// const certificate = fs.readFileSync('./server.crt', 'utf8');
-
-// var certificate = fs.readFileSync('certs/6b7d09109d01c6d5.crt');
-// const ca = fs.readFileSync('certs/gd_bundle-g2-g1.crt');
-
-
-// var credentials = {key: privateKey, cert: certificate};
+var   fs = require("fs");
 const credentials = {
-  // key: privateKey,
-  // cert: certificate,
-  // ca: [
-  //         // fs.readFileSync(path.join(__dirname,'../certs','gdig2_bundle.crt'), 'utf8')
-  //         fs.readFileSync(path.join(__dirname,'../certs','gdig2_bundle.crt'), 'utf8'), 
-  //         // fs.readFileSync(path.join(__dirname,'../certs','gd2.crt'), 'utf8'),
-  //   //    fs.readFileSync(path.join(__dirname,'../certs','gd3.crt'), 'utf8')
-  //      ]
+                     key:fs.readFileSync("Certs/key.pem"),
+                     cert:fs.readFileSync("Certs/cert.pem"),
+
 };
 
 // var server = http.createServer(credentials,function (req, res) {
@@ -41,7 +27,7 @@ function initialize() {
   return new Promise((resolve, reject) => {
     const app = express();
     // httpServer = https.createServer(app);
-    const httpServer = http.createServer(credentials, app);
+    const httpServer = https.createServer(credentials, app);
 
     // web server logging
     app.use(morgan("combined"));
