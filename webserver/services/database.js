@@ -81,7 +81,8 @@ function ExecuteMany_proc(statement, binds = [], opts = {}) {
       resolve(result);
      } 
   catch (err) {
-      reject(err);
+    console.log("Failed ExecuteMany_proc - " + err)
+      // reject(err);
     } 
   finally {
       if (conn) {

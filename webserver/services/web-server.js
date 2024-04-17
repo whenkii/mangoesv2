@@ -1,33 +1,24 @@
-const https = require("https");
+const http = require("http");
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const router = require("./router.js");
 const webServerConfig = require("../config/web-server.js");
 
-
 let httpServer;
 
 // var   fs = require("fs");
-// const path = require("path");
-
-var   fs = require("fs");
 const credentials = {
-                     key:fs.readFileSync("Certs/key.pem"),
-                     cert:fs.readFileSync("Certs/cert.pem"),
+                    //  key:fs.readFileSync("Certs/key.pem"),
+                    //  cert:fs.readFileSync("Certs/cert.pem"),
 
 };
-
-// var server = http.createServer(credentials,function (req, res) {
-//   res.writeHead(200, {'Content-Type': 'text/plain'});
-//   res.end('Hello World\n');
-// });
 
 function initialize() {
   return new Promise((resolve, reject) => {
     const app = express();
     // httpServer = https.createServer(app);
-    const httpServer = https.createServer(credentials, app);
+    const httpServer = http.createServer(credentials, app);
 
     // web server logging
     app.use(morgan("combined"));

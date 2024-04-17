@@ -40,7 +40,7 @@ export default function UpateProduct() {
         })
 
         setFormFields([...tempFormFields]);
-        console.log(tempFormFields[tempFormFields.findIndex( a => a.name === "name")].value)
+        
         const name = tempFormFields[tempFormFields.findIndex( a => a.name === "name")].value;
         const units  = tempFormFields[tempFormFields.findIndex( a => a.name === "units")].value;
         const price  = tempFormFields[tempFormFields.findIndex( a => a.name === "price")].value;

@@ -221,7 +221,7 @@ async function adhocSqlsViaBodyPost(req, res, next) {
     }
     finally {
       console.log("Successfully executed");
-      console.log("P_OUT: ",result.outBinds[0].p_out)
+      // console.log("P_OUT: ",result.outBinds[0].p_out)
     }
   }
   
