@@ -29,4 +29,10 @@ module.exports = {
     poolIncrement: 0,
     queueMax:0
   },
+  libLink:{
+  value:"/home/aruneckp/mangoesbkp/webserver/instantclient_19_19"
+  // value:"/Users/venkateshthammichetti/Desktop/mangoes2024/webserver/instantclient_19_8"
+} 
 };
+
+

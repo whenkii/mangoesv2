@@ -3,7 +3,7 @@ const oracledb = require('oracledb');
 
 try {
   oracledb.initOracleClient(
-    {libDir: '/Users/venkateshthammichetti/Desktop/mangoes2024/webserver/instantclient_19_8'}
+    {libDir: dbConfig.libLink.value}
     );
 } catch (err) {
   console.error('Whoops!');

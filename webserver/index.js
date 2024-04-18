@@ -1,6 +1,5 @@
 // *** Database Initialize/close/run of we server modules ***
-// const webServerFile="./services/web-server.js"
-const webServerFile = "./services/web-serverHttps.js"; 
+const webServerFile="./services/web-server.js"
 const webServer = require(webServerFile);
 // *** Database config such as username/password/connection string/Pool values ***
 const dbConfig = require("./config/database.js");
@@ -8,7 +7,6 @@ const dbConfig = require("./config/database.js");
 const database = require("./services/database.js");
 
 const path = require("path");
-
 
 const defaultThreadPoolSize = 4;
 
@@ -35,7 +33,7 @@ async function startup() {
     // console.log("Initializing web server module");
 
     await webServer.initialize();
-    console.log("Web server started !!! - " + path.parse(webServerFile).name);
+    console.log("Web server started !!! - HTTP");
   } catch (err) {
     console.error(err);
     process.exit(1); // Non-zero failure code
