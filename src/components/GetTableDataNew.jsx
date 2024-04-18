@@ -62,7 +62,7 @@ useEffect(() => {
              {stateVar.length > 0 ?
              <div>
                 <div className="d-flex justify-content-end">
-                         <CSVLink className="font-weight-bold" data={stateVar}>Export CSV</CSVLink>
+                         <CSVLink className="fw-bold" data={stateVar}>Export CSV</CSVLink>
                 </div>
                 <div  className="d-flex">
                     {Object.keys(stateVar[0]).map((item,index) => 

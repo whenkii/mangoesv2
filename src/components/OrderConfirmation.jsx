@@ -58,7 +58,7 @@ useEffect( () => {
         <>
         { state && state.length > 0 ?
         <MainContainer className="container">
-            <div className="text-success text-center mb-1 font-weight-bold">Completed</div>
+            <div className="text-success text-center mb-1 fw-bold">Completed</div>
             <div className="progress mb-2">
                 <div className="progress-bar progress-bar-striped w-100 bg-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
@@ -80,9 +80,9 @@ useEffect( () => {
                     </div>
                 )}
                 </div>
-                <div className="d-flex justify-content-center font-weight-bold mt-2 cartSummaryHeaders">
+                <div className="d-flex justify-content-center fw-bold mt-2 cartSummaryHeaders">
                     <div className="">{`Delivery Charges`}  <span className="text-danger">${deliveryCharges} </span> </div>
-                    {/* <small className="align-self-end ml-2 mb-1 font-weight-bold">{currency}</small> */}
+                    {/* <small className="align-self-end ml-2 mb-1 fw-bold">{currency}</small> */}
                 </div>
                 <div className="total">{` Total - `} <span className="text-danger">{currencySymb}{stateReducer} </span></div>
         </MainContainer>

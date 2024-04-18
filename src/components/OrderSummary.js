@@ -39,7 +39,7 @@ const currencySymb = currency === "SGD" ? "$" : "";
                             {/* <FontAwesomeIcon className="mx-1 text-warning" icon={faShoppingCart}/>  */}
                         </h1>
                         </div>
-                            <div className="d-flex justify-content-between font-weight-bold mt-2">
+                            <div className="d-flex justify-content-between fw-bold mt-2">
                                 <div className="cartSummaryHeaders">{`Total`}</div>
                                 <div className="cartSummaryHeaders ">{`${currencySymb}${inCartItems.reduce((prev,{OFFERPRICE,QTY}) => prev+OFFERPRICE*QTY,0)}`}</div>
                             </div>
@@ -53,10 +53,10 @@ const currencySymb = currency === "SGD" ? "$" : "";
                             </div>
                         
 
-                        <div className="d-flex justify-content-center font-weight-bold mt-2 cartSummaryHeaders">
+                        <div className="d-flex justify-content-center fw-bold mt-2 cartSummaryHeaders">
                                 {/* <div className="text-danger">{`Total: `}</div> */}
                                 <div className="total">{`${currencySymb}${cartReduceOfferPrice + deliveryCharges}`}</div>
-                                <small className="align-self-end ml-2 mb-1 font-weight-bold">{currency}</small>
+                                <small className="align-self-end ml-2 mb-1 fw-bold">{currency}</small>
                         </div>
                     </div>
                 <div className="itemsContainer">   
@@ -73,17 +73,17 @@ const currencySymb = currency === "SGD" ? "$" : "";
                 {inCartItems.map(({ID,NAME,OFFERPRICE,QTY,PRICE},i) => 
                     <div key={i} className="card-body text-center p-2 mt-1">
                         <div className="row ">
-                            <div className="cart-values col-3 font-weight-bold p-0">{NAME}</div>
-                            <div className="cart-values col text-danger font-weight-bold">
+                            <div className="cart-values col-3 fw-bold p-0">{NAME}</div>
+                            <div className="cart-values col text-danger fw-bold">
                             <span className="priceValue" style={{color:"var(--bsRed)",textDecorationColor:"var(--amzonChime)",textDecoration:OFFERPRICE ? "line-through":"none"}}>S${PRICE}</span> 
                             {`$${OFFERPRICE}`}</div>
                             <div className="cart-values col">{QTY}</div>
-                            <div className="cart-values col text-danger font-weight-bold">${QTY*OFFERPRICE}</div>                
+                            <div className="cart-values col text-danger fw-bold">${QTY*OFFERPRICE}</div>                
                         </div>
                         <div className="d-flex cart-update-container col-1 align-items-center justify-content-center ml-4">
                                 <span className="cart-btn btn btn-danger" onClick={() => productAction({type:"REMOVE",prodid:ID})}>-</span>
                                 {/* <span className="cart-delete" onClick={() => productAction({type:"DELETE",prodid:ID})}>
-                                    <FontAwesomeIcon className="trashbin text-warning font-weight-bold" icon={faTrashAlt}/></span> */}
+                                    <FontAwesomeIcon className="trashbin text-warning fw-bold" icon={faTrashAlt}/></span> */}
                                 <span className="cart-btn btn btn-success" onClick={() => productAction({type:"ADD",prodid:ID})}>+</span>
                             </div>
                     </div>

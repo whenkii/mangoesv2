@@ -88,19 +88,19 @@ const query = `select orders_seq.nextval seqid from dual`;
         <>
         {!isLoading ?
             <>
-            <div className="text-warning text-center mb-1 font-weight-bold">In-Progress</div>
+            <div className="text-warning text-center mb-1 fw-bold">Order n-Progress</div>
             <div className="progress mb-2">
                 <div className="progress-bar progress-bar-striped w-75 bg-warning" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             
 
-                <div className="text-center text-danger font-weight-bold">
+                <div className="text-center text-danger fw-bold">
                     <span className="ml-auto" style={{color:"var(--amzonChime)"}}>Total:</span> 
                     <span>{` ${currencySymb}${inCartItems.reduce((prev,{OFFERPRICE,QTY}) => prev+OFFERPRICE*QTY,0) + deliveryCharges}`}</span>
                 </div>
                 <div className="card-header mt-1">PAYEMNT</div>
-                {/* <div className="text-center mt-1 text-danger"> <span className="text-dark font-weight-bold">ORDERID </span> : <span className="font-weight-bold">GR-{orderId}</span></div> */}
-                <div className="text-center mt-1 text-dark"> Tracking Number <span className=" text-danger font-weight-bold">GR-{orderId} </span></div>
+                {/* <div className="text-center mt-1 text-danger"> <span className="text-dark fw-bold">ORDERID </span> : <span className="fw-bold">GR-{orderId}</span></div> */}
+                <div className="text-center mt-1 text-dark"> Tracking Number <span className=" text-danger fw-bold">GR-{orderId} </span></div>
                 <div className="text-center text-danger"> <small>Please mention above tracking No# while making payment</small></div>
                 <div className="d-flex justify-content-center paymentOptions"> 
                     {payemntOptions.map ((item,i) => 
@@ -128,9 +128,9 @@ const query = `select orders_seq.nextval seqid from dual`;
                 <div className="text-center mt-4">
                         {orderForm.paymentMode === "qrcode" &&
                             <>
-                                <p className="text-danger font-weight-bold mb-0"> {uniquePayID} </p>
-                                {/* <p className="text-danger font-weight-bold m-0"> PayNow <span>: 81601289</span></p> */}
-                                <p className="font-weight-bold m-0 mb-2" style={{color:"var(--amzonChime)"}}> {companyName}</p>
+                                <p className="text-danger fw-bold mb-0"> {uniquePayID} </p>
+                                {/* <p className="text-danger fw-bold m-0"> PayNow <span>: 81601289</span></p> */}
+                                <p className="fw-bold m-0 mb-2" style={{color:"var(--amzonChime)"}}> {companyName}</p>
                                 <img className="navImage m-auto" src={qrcode} alt="Logo" /> 
                                 
                             </>
@@ -150,7 +150,7 @@ const query = `select orders_seq.nextval seqid from dual`;
                            
                            <p className="form-check-label"> 
                                 <a href={`https://wa.me/${whatsappNo}`}>
-                                    <span className=" whatsapptext text-success"> <fasIcons.FaWhatsapp className="whatsapp" /> WhatsApp </span>
+                                    <span className="whatsapptext text-success no-style"> <fasIcons.FaWhatsapp className="whatsapp" /> WhatsApp </span>
                                 </a>
                                 Payment confirmation to <span className=" whatsapptext text-danger" > {whatsappNo} </span> 
                             </p>
@@ -205,6 +205,10 @@ color:white;
     margin:0;
     font-weight:bold;
 }
+.form-check-input{
+    font-size:1.2rem;
+    font-weight:bold;
+}
 .btn{
     margin:0 0 1rem 0;
     width:12rem;
@@ -228,6 +232,7 @@ color:white;
 }
 .whatsapptext{
     font-size:0.8rem;
+    text-decoration:none;
 }
 .whatsapp{
     color:var(--bsGreen);
@@ -240,6 +245,9 @@ color:white;
 @media (max-width:798px){
     .form-check-label{
         font-size:0.8rem;
+    }
+    .form-check-input{
+        font-size:1rem;
     }
     .icons{
         font-size:1.2rem;

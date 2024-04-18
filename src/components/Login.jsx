@@ -115,10 +115,10 @@ const funOnChange = (e) =>
                         </div>
                     </div>
 
-                    {/* <div className="text-right mb-3 text-danger font-weight-bold small" >Forgot password?</div> */}
+                    {/* <div className="text-right mb-3 text-danger fw-bold small" >Forgot password?</div> */}
                     <div className="d-flex flex-column justify-content-center mt-2">
                         <button className="btn btn-signin btn-inline-block m-auto btn-sm" type="submit">Signin</button>
-                        <div className="text-center mt-3 mb-0 text-secondary font-weight-bold small" >Don't have an account yet?</div>
+                        <div className="text-center mt-3 mb-0 text-secondary fw-bold small" >Don't have an account yet?</div>
                         <Link className="m-auto pt-1" to="/signup"><div className="text-center btn btn-danger btn-inline-block btn-sm" type="submit">SignUp</div></Link>
                     </div>
                 </form>
@@ -128,7 +128,7 @@ const funOnChange = (e) =>
                   
                 { accountInfo.loginType === "GUEST" ?
                         <div className="d-flex justify-content-center mt-2 flex-column">
-                        <h2 className="text-center font-weight-bold text-danger">Guest</h2> 
+                        <h2 className="text-center fw-bold text-danger">Guest</h2> 
                         <div className="d-flex">
                             <div className="btn btn-sm m-auto" style={{background:"var(--amzonChime)"}} onClick={() => navigate("/")}>HOME</div>
                             <div className="btn btn-sm m-1 btn-danger" onClick={clearGuest}>SIGNUP</div>
@@ -136,14 +136,14 @@ const funOnChange = (e) =>
                    </div>
                   :
                 <>
-                    <p className="text-center font-weight-bold text-danger">{`${accountInfo.firstname} ${accountInfo.lastname}`} 
+                    <p className="text-center fw-bold text-danger">{`${accountInfo.firstname} ${accountInfo.lastname}`} 
                     {accountInfo.type === "admin" &&
                         <Link to="/admin" className="settings"><fiIcons.FiSettings className="settings-icon"/></Link>
                     }
                     </p>
                     
                     <div className="d-flex justify-content-center mb-4">
-                        <div className="btn btn-signout text-weight font-weight-bold" onClick={handleSignout}> Signout </div>
+                        <div className="btn btn-signout text-weight fw-bold" onClick={handleSignout}> Signout </div>
                     </div>
 
                     <div className="d-flex justify-content-center">

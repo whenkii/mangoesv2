@@ -139,7 +139,7 @@ useEffect(() => {
                         {stateVar.map((dataArray,index) =>
                             <tr key={index}> 
                                 {Object.keys(state[0]).map( (attrName,index) =>
-                                    <th key={index} scope="row" className={`border tdata text-danger`}> 
+                                    <th key={index} scope="row" className={`border tdata ${attrName === "PRICE" ? "text-danger":"text-dark"}`}> 
                                     { attrName === hyperLinks.attr 
                                     // && comp === hyperLinks.comp 
                                     ?  

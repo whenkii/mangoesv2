@@ -84,7 +84,7 @@ export default function UpateProduct() {
                     <ToastContainer />     
                     <div className="d-flex">
                         <Link to="/account" className="login">ADD PRODUCT</Link>
-                        {/* <Link to="/Signup" className="m-auto text-dark font-weight-bold">SIGNUP</Link> */}
+                        {/* <Link to="/Signup" className="m-auto text-dark fw-bold">SIGNUP</Link> */}
                     </div>
                     <form onSubmit={submitForm}>    
                         <div className="d-flex flex-column" >

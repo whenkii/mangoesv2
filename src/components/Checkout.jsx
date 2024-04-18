@@ -220,10 +220,10 @@ const handleClick = (e) => {
             </div>
             
             <div className="card-header mt-3">Choose pickup location</div>
-            <div className="font-weight-bold mt-3">
+            <div className="fw-bold mt-3">
                 <div className="d-flex justify-content-center flex-wrap" >
                     {areas.map((item,i) =>
-                        <button className="btn btn-sized-sm m-1 p-1 btn-secondary text-white font-weight-bold" 
+                        <button className="btn btn-sized-sm m-1 p-1 btn-secondary text-white fw-bold" 
                                 style={{background: (deliveryState[0].location === item ? "var(--amzonChime)":null)}}  key={i} 
                                 onClick={() => onClickLocation(item)}>
                         {item}

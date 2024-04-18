@@ -91,7 +91,7 @@ export default function SignUp() {
                     <ToastContainer />
                     <div className="d-flex">
                         <Link to="/account" className="login">Signup</Link>
-                        {/* <Link to="/Signup" className="m-auto text-dark font-weight-bold">SIGNUP</Link> */}
+                        {/* <Link to="/Signup" className="m-auto text-dark fw-bold">SIGNUP</Link> */}
                     </div>
                     <form onSubmit={submitSignUpForm}>    
                         <div className="d-flex flex-column" >
@@ -109,7 +109,7 @@ export default function SignUp() {
                         <div className="d-flex flex-column justify-content-center mb-3">
                             <button className="btn btn-warning btn-inline-block m-auto" type="submit" >SignUp</button>
                         </div>
-                    <Link className="m-auto pt-2" to="/account"><div className="text-center mt-2 mb-0 text-success font-weight-bold small" >Already have an account?</div></Link>
+                    <Link className="m-auto pt-2" to="/account"><div className="text-center mt-2 mb-0 text-success fw-bold small" >Already have an account?</div></Link>
                     </form>
                 </SigninContainer>
             )

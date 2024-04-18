@@ -174,12 +174,12 @@ useEffect( () => {
                     </div>
                 <div className="deliveryMess text-center mt-2 text-warning"> Why Chittoor Mangoes?</div>
                     <div className="mt-4 ml-2 ">
-                            <li className="deliveryMess font-weight-bold">Ideal climate for mangoes </li>
-                            <li className="deliveryMess font-weight-bold">Hot Water Treatment(HWT) </li>
-                            <li className="deliveryMess font-weight-bold">Sweet</li>
-                            <li className="deliveryMess font-weight-bold"> Aroma</li>
-                            <li className="deliveryMess font-weight-bold">Lowest price in SG</li>
-                            <li className="deliveryMess font-weight-bold">Own farms</li>
+                            <li className="deliveryMess fw-bold">Ideal climate for mangoes </li>
+                            <li className="deliveryMess fw-bold">Hot Water Treatment(HWT) </li>
+                            <li className="deliveryMess fw-bold">Sweet</li>
+                            <li className="deliveryMess fw-bold"> Aroma</li>
+                            <li className="deliveryMess fw-bold">Lowest price in SG</li>
+                            <li className="deliveryMess fw-bold">Own farms</li>
                     </div>
                 </div>
             }

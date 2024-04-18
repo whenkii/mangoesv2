@@ -8,17 +8,17 @@ export default function ContactUs() {
     var navigate = useNavigate();
   return (
     <Maincontainer className="container card">
-         <h4 className="text-dark text-center font-weight-bold">Garden Roots Pte Ltd</h4>
+         <h4 className="text-dark text-center fw-bold">Garden Roots Pte Ltd</h4>
         <div className="card-header">CONTACTUS</div>
        
             <div className="text-center mt-2 mb-4">
                     <div className="d-flex justify-content-center mt-1 row"> 
-                        <p className="col text-success font-weight-bold"> <fasIcons.FaWhatsapp className="whatsapp" /> WhatsApp  </p>
+                        <p className="col text-success fw-bold"> <fasIcons.FaWhatsapp className="whatsapp" /> WhatsApp  </p>
                         <p className="col text-danger" > (+65) 81601289 </p> 
                     </div>
 
                     <div className="d-flex justify-content-center mt-1 row"> 
-                        <p className="col text-dark font-weight-bold"> EMAIL</p>
+                        <p className="col text-dark fw-bold"> EMAIL</p>
                         <p className="col text-danger" > help@gardenroots.com </p> 
                     </div>
             </div>

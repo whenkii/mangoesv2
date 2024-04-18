@@ -137,12 +137,12 @@ useEffect( () => {
                     </div>
                 <div className="deliveryMess text-center mt-2 text-warning"> Why Chittoor Mangoes?</div>
                     <div className="mt-4 ml-2 ">
-                            <li className="deliveryMess font-weight-bold">HWT (Hot Water Treated) </li>
-                            <li className="deliveryMess font-weight-bold">Natural Sweet </li>
-                            <li className="deliveryMess font-weight-bold"> Aroma</li>
-                            <li className="deliveryMess font-weight-bold">Lowest price in SG</li>
-                            <li className="deliveryMess font-weight-bold">Harvested from own farms</li>
-                            <li className="deliveryMess font-weight-bold"> Premium quality Mangoes</li>
+                            <li className="deliveryMess fw-bold">HWT (Hot Water Treated) </li>
+                            <li className="deliveryMess fw-bold">Natural Sweet </li>
+                            <li className="deliveryMess fw-bold"> Aroma</li>
+                            <li className="deliveryMess fw-bold">Lowest price in SG</li>
+                            <li className="deliveryMess fw-bold">Harvested from own farms</li>
+                            <li className="deliveryMess fw-bold"> Premium quality Mangoes</li>
                     </div>
                 </div>
             }

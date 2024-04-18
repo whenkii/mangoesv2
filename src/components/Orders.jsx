@@ -127,8 +127,8 @@ export function AllOrders() {
                 <div className="btn btn-success btn-sized-md m-1" onClick={() => navigate("/")}>Home</div>
             </div>
             <div className="d-flex flex-column justify-content-center text-center card">
-                <div className="text-dark font-weight-bold"> Total : <span className="cartTotHeaders">{orderTotal}</span></div>
-                <div className="text-dark font-weight-bold">Amount : <span className="cartTotHeaders">{`${currencySymb}${orderTotalPrice}`}</span></div>
+                <div className="text-dark fw-bold"> Total : <span className="cartTotHeaders">{orderTotal}</span></div>
+                <div className="text-dark fw-bold">Amount : <span className="cartTotHeaders">{`${currencySymb}${orderTotalPrice}`}</span></div>
             </div>
             {orderDetails.length > 0 ?
             <DisplayTableData state={orderDetails} comp="ALLORDERS"/>
