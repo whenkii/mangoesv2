@@ -1,6 +1,7 @@
 // *** Database Initialize/close/run of we server modules ***
-const webServer = require("./services/web-server.js");
-// const webServer = require("./services/web-serverHttps.js"); 
+// const webServerFile="./services/web-server.js"
+const webServerFile = "./services/web-serverHttps.js"; 
+const webServer = require(webServerFile);
 // *** Database config such as username/password/connection string/Pool values ***
 const dbConfig = require("./config/database.js");
 // *** Database Initialize/close/run of DB modules ***
@@ -34,7 +35,7 @@ async function startup() {
     // console.log("Initializing web server module");
 
     await webServer.initialize();
-    console.log("Web server started !!! ");
+    console.log("Web server started !!! - " + path.parse(webServerFile).name);
   } catch (err) {
     console.error(err);
     process.exit(1); // Non-zero failure code
