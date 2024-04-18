@@ -1,6 +1,8 @@
 const dbConfig = require("../config/database.js");
 const oracledb = require('oracledb');
 
+console.log(dbConfig.libLink.value)
+
 try {
   oracledb.initOracleClient(
     {libDir: dbConfig.libLink.value}

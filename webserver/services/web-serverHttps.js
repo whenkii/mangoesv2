@@ -10,8 +10,8 @@ let httpServer;
 
 var   fs = require("fs");
 const credentials = {
-                     key:fs.readFileSync("./certs/key.pem"),
-                     cert:fs.readFileSync("./certs/cert.pem"),
+                     key:fs.readFileSync("./certs/zeroSSL/key.pem"),
+                     cert:fs.readFileSync("./certs/zeroSSL/cert.pem"),
 
 };
 
