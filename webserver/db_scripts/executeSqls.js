@@ -417,31 +417,31 @@ const plsqlProc = `CALL ${scriptName}(:p_in, :p_out,:p_out_rec)`;
 
 module.exports.execProcDynamic = execProcDynamic;
 
-async function execProcDynamicNoOutRec(req, res, next) {
-  // return new Promise(async (resolve, reject) => {
-  console.log("START","execProcDynamicNoOutRec");
+// async function execProcDynamicNoOutRec(req, res, next) {
+//   // return new Promise(async (resolve, reject) => {
+//   console.log("START","execProcDynamicNoOutRec");
 
-// const {scriptName,recName} = req.body.dbValues;
-const {scriptName,recName,binds} = req.body;
+// // const {scriptName,recName} = req.body.dbValues;
+// const {scriptName,recName,binds} = req.body;
 
-console.log("Bind values",binds);
+// console.log("Bind values",binds);
 
-const plsqlProc = `CALL ${scriptName}(:p_in)`;
+// const plsqlProc = `CALL ${scriptName}(:p_in)`;
 
-  try {
-      const result = await database.execProcDynamicNoOutRec(plsqlProc, binds,recName);
-      console.log(result);
-      res.status(200).json("OK");
-        console.log("Successfully executed - execProcDynamicNoOutRec");
-    } 
-  catch (err) {
-      next(err);
-      console.log(err);
-      res.status(400).end();
-    }
-  finally {
-    console.log("Completed  - execProcDynamicNoOutRec");
-    }
-}
+//   try {
+//       const result = await database.execProcDynamicNoOutRec(plsqlProc, binds[0],recName);
+//       console.log(result);
+//       res.status(200).json("OK");
+//         console.log("Successfully executed - execProcDynamicNoOutRec");
+//     } 
+//   catch (err) {
+//       next(err);
+//       console.log(err);
+//       res.status(400).end();
+//     }
+//   finally {
+//     console.log("Completed  - execProcDynamicNoOutRec");
+//     }
+// }
 
-module.exports.execProcDynamicNoOutRec = execProcDynamicNoOutRec;
+// module.exports.execProcDynamicNoOutRec = execProcDynamicNoOutRec;

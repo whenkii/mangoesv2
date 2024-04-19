@@ -88,12 +88,13 @@ const CartReducerFun = (state,action) => {
             newState = newState.filter(a => a.QTY > 0);
             // For each record give attribute name as p_in as this is the naming convention in node.js code
             newState = newState.map( a => ({p_in:a}));
+            // console.log(newState)
             const finalState = { scriptName:"PKG_ORDERS.CREATE_ORDER",recName : "PKG_ORDERS.createOrderRec",binds:newState}
 
             // Call Proc to save the order details in DB
             if (!deliveryDetails.DELMODE) {
             // axios.post(`${config.restAPIserver}:${config.restAPIHost}/api/executeProc_log_order`,newState)
-            axios.post(`${config.restAPIserver}:${config.restAPIHost}/api/execProcDynamicNoOutRec`,finalState)
+            axios.post(`${config.restAPIserver}:${config.restAPIHost}/api/execProcDynamic`,finalState)
                 .then(({data,status}) => {
                     if ( ( status && status !== 200 ) || data !== "OK" ) {
                         // alert("Order creation failed error code - " + status);
