@@ -102,7 +102,7 @@ const CartReducerFun = (state,action) => {
                         toast.error(data)
                     }
                     else {
-                        toast.success("Order has been successfully created");
+                        // toast.success("Order has been placed");
                         tempState = [...productsInit]
                     }
                             })

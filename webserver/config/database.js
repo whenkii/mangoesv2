@@ -24,8 +24,9 @@ module.exports = {
     // user: "admin",
     // password: "tnrstore123",
     connectString: "vsc5vco3v81j5xy5_low", // This is Oracle Cloud DB
-    poolMin: 20,
-    poolMax: 20,
+    // connectString: "igv1kfr3un0ae9lm_low", // This is Oracle Cloud DB 
+    poolMin: 10,
+    poolMax: 10,
     poolIncrement: 0,
     queueMax:0
   },

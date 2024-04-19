@@ -34,21 +34,21 @@ useEffect( () => {
     .then((res) => {
         // console.log(res)
         if (res[0] === "ERROR"){
-            toast.error("Error while getting order details");    
+            toast.error("Error while pulling your order. Contact Support");    
         }
         else if ( res.length === 0 )  {
             toast.error("No Data found");
         }
         else if ( res.length > 0 ) {
                 setState(res);
-                toast.success("Order has been successfully created");
+                toast.success("Order has been placed");
             }
         }
     )
     .catch ( (e) => {
         toast.error(e);
     })
-     , 2000);
+     , 0);
      return () => {
         clearTimeout(timer);
       };
