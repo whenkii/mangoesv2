@@ -216,11 +216,10 @@ function execProcDynamicNoOutRec(plsqlProc, binds = [],recName) {
 
       // await conn.close();
 
-      const options = {bindDefs  : {p_in  : { type: RectypeClass },
-                                    p_out : { type: oracledb.STRING,dir: oracledb.BIND_OUT,maxSize: 5 }
+      const options = {bindDefs  : {p_in  : { type: RectypeClass }
                                   }     
                       };
-        options.outFormat = oracledb.OBJECT;
+        // options.outFormat = oracledb.OBJECT;
         options.autoCommit = false;
       
       // conn = await oracledb.getConnection();
