@@ -55,7 +55,7 @@ useEffect( () => {
         clearTimeout(timer);
       };
 
-    },[query])
+    },[query,retry])
     return (
         <>
         { state && state.length > 0 ?
