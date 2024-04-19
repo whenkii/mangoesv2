@@ -93,7 +93,7 @@ const CartReducerFun = (state,action) => {
             // Call Proc to save the order details in DB
             if (!deliveryDetails.DELMODE) {
             // axios.post(`${config.restAPIserver}:${config.restAPIHost}/api/executeProc_log_order`,newState)
-            axios.post(`${config.restAPIserver}:${config.restAPIHost}/api/execProcDynamic`,finalState)
+            axios.post(`${config.restAPIserver}:${config.restAPIHost}/api/execProcDynamicNoOutRec`,finalState)
                 .then(({data,status}) => {
                     if ( ( status && status !== 200 ) || data !== "OK" ) {
                         // alert("Order creation failed error code - " + status);

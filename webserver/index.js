@@ -1,10 +1,13 @@
 // *** Database Initialize/close/run of we server modules ***
 const webServerFile="./services/web-server.js"
 const webServer = require(webServerFile);
+require('log-timestamp');
 // *** Database config such as username/password/connection string/Pool values ***
 const dbConfig = require("./config/database.js");
 // *** Database Initialize/close/run of DB modules ***
 const database = require("./services/database.js");
+
+
 
 const path = require("path");
 

@@ -1,6 +1,7 @@
 // *** Database Initialize/close/run of we server modules ***
 const webServerFile = "./services/web-serverHttps.js"; 
 const webServer = require(webServerFile);
+require('log-timestamp');
 // *** Database config such as username/password/connection string/Pool values ***
 const dbConfig = require("./config/database.js");
 // *** Database Initialize/close/run of DB modules ***

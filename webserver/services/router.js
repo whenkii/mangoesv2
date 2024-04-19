@@ -35,6 +35,10 @@ router
   .route("/execProcDynamic")
   .post(executeSqls.execProcDynamic);
 
+  router
+  .route("/execProcDynamicNoOutRec")
+  .post(executeSqls.execProcDynamicNoOutRec);
+
 // router
 //   .route("/insert_issue/:email?/:issue?")
 //   // .get(logissue.funInsert)

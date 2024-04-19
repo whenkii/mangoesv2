@@ -118,7 +118,7 @@ function ExecuteMany_Dyn(plsqlProc, binds = [],recName) {
       // await conn.close();
 
       const options = {bindDefs  : {p_in           : { type: RectypeClass },
-                                    p_out          : { type: oracledb.STRING,dir: oracledb.BIND_OUT,maxSize: 500 },
+                                    p_out          : { type: oracledb.STRING,dir: oracledb.BIND_OUT,maxSize: 5 },
                                     p_out_rec      : { type: RectypeClass, dir: oracledb.BIND_OUT },
                                   }     
                       };
@@ -151,6 +151,104 @@ function ExecuteMany_Dyn(plsqlProc, binds = [],recName) {
 }
 
 module.exports.ExecuteMany_Dyn  = ExecuteMany_Dyn;
+
+function ExecuteMany_DynNoOutRec(plsqlProc, binds = [],recName) {
+  return new Promise(async (resolve, reject) => {
+    console.log(`START - ExecuteMany_Dyn \n`)
+
+    console.log(`Executing below statement  .... \n`,plsqlProc)
+
+    let conn;
+    
+  try {
+      conn = await oracledb.getConnection();
+      const RectypeClass = await conn.getDbObjectClass(recName.toUpperCase());
+
+      // await conn.close();
+
+      const options = {bindDefs  : {p_in           : { type: RectypeClass },
+                                    p_out          : { type: oracledb.STRING,dir: oracledb.BIND_OUT,maxSize: 5 },
+                                    p_out_rec      : { type: RectypeClass, dir: oracledb.BIND_OUT },
+                                  }     
+                      };
+        options.outFormat = oracledb.OBJECT;
+        options.autoCommit = false;
+      
+      // conn = await oracledb.getConnection();
+      const result = await conn.executeMany(plsqlProc, binds, options);
+      resolve(result);
+      console.log("Successful execution")
+     } 
+  catch (err) {
+      reject(err);
+    } 
+  finally {
+      if (conn) {
+        console.log("connection is active")
+        // conn assignment worked, need to close
+        try {
+            console.log(`Closing Connection after executing ExecuteMany_Dyn \n`)
+            await conn.close();
+            console.log(`Connection Closed !!! \n`)
+            } 
+        catch (err) {
+          console.log("Failed - ExecuteMany_Dyn\n" + err);
+        }
+      }
+    }
+  });
+}
+
+module.exports.ExecuteMany_DynNoOutRec  = ExecuteMany_DynNoOutRec;
+
+
+function execProcDynamicNoOutRec(plsqlProc, binds = [],recName) {
+  return new Promise(async (resolve, reject) => {
+    console.log(`START - ExecuteMany_Dyn \n`)
+
+    console.log(`Executing below statement  .... \n`,plsqlProc)
+
+    let conn;
+    
+  try {
+      conn = await oracledb.getConnection();
+      const RectypeClass = await conn.getDbObjectClass(recName.toUpperCase());
+
+      // await conn.close();
+
+      const options = {bindDefs  : {p_in  : { type: RectypeClass },
+                                    p_out : { type: oracledb.STRING,dir: oracledb.BIND_OUT,maxSize: 5 }
+                                  }     
+                      };
+        options.outFormat = oracledb.OBJECT;
+        options.autoCommit = false;
+      
+      // conn = await oracledb.getConnection();
+      const result = await conn.executeMany(plsqlProc, binds, options);
+      resolve(result);
+      console.log("Successful execution")
+     } 
+  catch (err) {
+      reject(err);
+    } 
+  finally {
+      if (conn) {
+        console.log("connection is active")
+        // conn assignment worked, need to close
+        try {
+            console.log(`Closing Connection after executing ExecuteMany_Dyn \n`)
+            await conn.close();
+            console.log(`Connection Closed !!! \n`)
+            } 
+        catch (err) {
+          console.log("Failed - ExecuteMany_Dyn\n" + err);
+        }
+      }
+    }
+  });
+}
+
+module.exports.execProcDynamicNoOutRec  = execProcDynamicNoOutRec;
 
 
 

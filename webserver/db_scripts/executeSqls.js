@@ -416,3 +416,32 @@ const plsqlProc = `CALL ${scriptName}(:p_in, :p_out,:p_out_rec)`;
 }
 
 module.exports.execProcDynamic = execProcDynamic;
+
+async function execProcDynamicNoOutRec(req, res, next) {
+  // return new Promise(async (resolve, reject) => {
+  console.log("START","execProcDynamic");
+
+// const {scriptName,recName} = req.body.dbValues;
+const {scriptName,recName,binds} = req.body;
+
+console.log("Bind values",binds);
+
+const plsqlProc = `CALL ${scriptName}(:p_in,:p_out)`;
+
+  try {
+      const result = await database.execProcDynamicNoOutRec(plsqlProc, binds,recName);
+      console.log(result);
+      res.status(200).json(result.outBinds[0].p_out);
+        console.log("Successfully executed - execProcDynamic");
+    } 
+  catch (err) {
+      next(err);
+      console.log(err);
+      res.status(400).end();
+    }
+  finally {
+    console.log("Completed  - execProcDynamic");
+    }
+}
+
+module.exports.execProcDynamicNoOutRec = execProcDynamicNoOutRec;
