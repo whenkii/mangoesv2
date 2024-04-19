@@ -39,7 +39,7 @@ useEffect( () => {
         }
         else if ( res.length === 0 )  {
              setRetry(retry+1);
-            toast.error("No Data found");
+            // toast.error("No Data found");
         }
         else if ( res.length > 0 ) {
                 setState(res);
