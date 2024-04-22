@@ -23,16 +23,16 @@ module.exports = {
     // connectString: "localhost:1521/VSC5VCO3V81J5XY5",
     // user: "admin",
     // password: "tnrstore123",
-    connectString: "vsc5vco3v81j5xy5_low", // This is Oracle Cloud DB
-    // connectString: "igv1kfr3un0ae9lm_low", // This is Oracle Cloud DB 
+    // connectString: "vsc5vco3v81j5xy5_low", // This is Oracle Cloud DB
+    connectString: "igv1kfr3un0ae9lm_low", // This is Oracle Cloud DB DEV DB
     poolMin: 10,
     poolMax: 10,
     poolIncrement: 0,
     queueMax:0
   },
   libLink:{
-  value:"/home/aruneckp/mangoesbkp/webserver/instantclient_19_19"
-  // value:"/Users/venkateshthammichetti/Desktop/mangoes2024/webserver/instantclient_19_8"
+  // value:"/home/aruneckp/mangoesbkp/webserver/instantclient_19_19"
+  value:process.platform = "darwin" ? "/Users/venkateshthammichetti/Desktop/mangoes2024/webserver/instantclient_19_8" : "/home/aruneckp/mangoesbkp/webserver/instantclient_19_19"
 } 
 };
 

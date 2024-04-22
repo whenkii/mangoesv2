@@ -12,12 +12,9 @@ import { GetApiData } from '../components/ApiCalls';
 // import { ToastContainer, toast } from 'react-toastify';
 // console.log(location.state)
 export default function OrderConfirmation(props) {
-const location = useLocation();
-// const deliveryCharges = props.match.params.deliverycharges;
-// console.log(location.state)
-const deliveryCharges=location.state.deliveryCharges;
-const orderId=location.state.id;
-const [,,,,,,,,,,,,configState,currency] = useContext(productContext);
+const location=useLocation()
+const [,,,,,,,,,,,deliveryCharges,configState,currency,orderStatus] = useContext(productContext);
+const orderId=location.state.orderId;
 const paymentDetails = configState[0].val ? JSON.parse(configState[0].val.filter( a => a.NAME === "PAYMENTINFO")[0].JSON_STRING).value:null;
 const {whatsappNo} = paymentDetails ? paymentDetails :123;
 const delDate = configState[0].val ? JSON.parse(configState[0].val.filter( a => a.NAME === "DEL_DATE")[0].JSON_STRING).value:null;
@@ -28,9 +25,7 @@ const selctiveState = state.map(({PAYMENT,ADDRESS,DELIVERY:DELIVERYMODE}) => ({P
 const newState = state.map(({NAME,OFFERPRICE,QTY,TOTAL}) => ({NAME,OFFERPRICE,QTY,TOTAL}));
 
 const query = `select NAME,OFFERPRICE,QTY,OFFERPRICE*QTY Total,paymode payment,(case when del_mode='delivery' then address else Decode(location,'Punggol','Venkat, Blk - 679A,S-821679,Mob: 81601289','Tampines','Venky, Near Tampines West MRT,520929,Mob:98346177','Pasir Ris','Mohan,Blk 574,Pasir Ris St 53,S-520574,Mobile: 90628025','Upper Changi','Naveen, Blk 718,03-06,Changi Green,486849,Mobile : 86482486','Woodlands','Srinivas Reddy,Blk 724, #03-502,Woodlands ave 6,730724,Mobile : 91003247') end) address,del_mode delivery from orders a,products b,deliveries c where a.prodid=b.id and a.id=c.order_id and a.id=${orderId}`;
-const [retry,setRetry] = useState(0)
 useEffect( () => {
-    const timer = setTimeout(() =>
     GetApiData(query)
     .then((res) => {
         // console.log(res)
@@ -38,24 +33,19 @@ useEffect( () => {
             toast.error("Error while pulling your order. Contact Support");    
         }
         else if ( res.length === 0 )  {
-             setRetry(retry+1);
+            //  setRetry(retry+1);
             // toast.error("No Data found");
         }
         else if ( res.length > 0 ) {
                 setState(res);
-                toast.success("Order has been placed");
             }
         }
     )
     .catch ( (e) => {
         toast.error(e);
-    })
-     , 0);
-     return () => {
-        clearTimeout(timer);
-      };
+    });
 
-    },[query,retry])
+    },[query,orderStatus])
     return (
         <>
         { state && state.length > 0 ?

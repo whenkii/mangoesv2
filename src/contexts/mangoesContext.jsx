@@ -1,33 +1,22 @@
 import React,{createContext,useReducer,useEffect,useState} from 'react'
-// import axios from 'axios'
 import { GetApiData } from '../components/ApiCalls';
-// import {config} from '../components/reactConfig'
 import { ToastContainer,toast } from 'react-toastify';
-import axios from 'axios'
-import {config} from '../components/reactConfig'
-// import { RiContactsBookLine } from 'react-icons/ri';
-// import { RiContactsBookLine } from 'react-icons/ri'; 
 
 
 let products = []
 let inItDelivery = {shipMode:"",address:"",location:""}
 
-var productsInit; 
-
 export const productContext = createContext();
-
 
 const CartReducerFun = (state,action) => {
     var tempState     = [...state];
-    var {type,prodid,accountInfo,orderid} = action;
-    var {deliveryDetails} = action;
+    var {type,prodid} = action;
     var idx           = tempState.findIndex( a => a.ID === prodid);
     switch (type) {
         case "INIT" :
             tempState = [...action.state];
             tempState = tempState.map( a => ({...a,QTY:0,inCart:false}))
             products = [...tempState];
-            productsInit = [...tempState]
             return [...tempState];
         case "GET_LATEST" :
             tempState = [...action.state];
@@ -68,55 +57,6 @@ const CartReducerFun = (state,action) => {
         case "BLANK_PAYEMENT_MODE":  
         toast.error("Choose Payment mode");
         return [...tempState];
-        case "CREATE_ORDER":
-            tempState = [...state]
-            //Extract necessary attributes from Cart/State
-            // console.log(deliveryDetails)
-            let newState = state.map(i => 
-                ({ORDERID:orderid,
-                  EMAIL:accountInfo.email,
-                  PRODID:parseInt(i.ID,10),
-                  QTY:parseInt(i.QTY,10),
-                  PRICE:parseInt(i.OFFERPRICE,10),
-                  DELMODE:deliveryDetails.shipMode,
-                  ADDRESS:String(deliveryDetails.address),
-                  LOCATION:deliveryDetails.location,
-                  PAYMODE:deliveryDetails.paymentMode,
-                  DELIVERYCHARGES:deliveryDetails.deliveryCharges
-                }));
-            //Get products that are in cart only
-            newState = newState.filter(a => a.QTY > 0);
-            // For each record give attribute name as p_in as this is the naming convention in node.js code
-            newState = newState.map( a => ({p_in:a}));
-            // console.log(newState)
-            const finalState = { scriptName:"PKG_ORDERS.CREATE_ORDER",recName : "PKG_ORDERS.createOrderRec",binds:newState}
-
-            // Call Proc to save the order details in DB
-            if (!deliveryDetails.DELMODE) {
-            // axios.post(`${config.restAPIserver}:${config.restAPIHost}/api/executeProc_log_order`,newState)
-            axios.post(`${config.restAPIserver}:${config.restAPIHost}/api/execProcDynamic`,finalState)
-                .then(({data,status}) => {
-                    if ( ( status && status !== 200 ) || data !== "OK" ) {
-                        // alert("Order creation failed error code - " + status);
-                        // toast.error("Order creation failed")
-                        toast.error(data)
-                    }
-                    else {
-                        // toast.success("Order has been placed");
-                        tempState = [...productsInit]
-                    }
-                            })
-                .catch((e) => {
-                        // console.log(e);
-                        toast.error(`Order creation failed`); 
-                        tempState = [...state]
-                    })
-                }
-            else {
-                toast.error(`Choose Delivery mode`); 
-            }
-            // console.log(tempState)
-            return [...tempState]; 
         case "CLEAR":
             // toast.success("Cart has been cleared")
             return [...products];
@@ -159,6 +99,11 @@ const configReducer = (state,action) => {
         return [...tempState]
 } 
 
+const orderStatusReducer = (state,action) => {
+    return true;
+
+}
+
 // const delCharges = ({productCountAll,shipMode,location}) => {
     
 // }
@@ -166,18 +111,16 @@ const configReducer = (state,action) => {
 export function ProductsProvider(props) {
 // const [accountInfo] = useContext(accountsContext);
 const [configState,configAction] = useReducer(configReducer,[{state:"INIT"}]);
-const [productsState,productAction] = useReducer(CartReducerFun,[{ID:1,NAME:"INIT",PRICE:"34",OFFERPRICE:32,UNITS:"5Kg",INSTOCK:"Y",INCART:false,QTY:0,}]);
+const [orderStatus,orderStatusAction] = useReducer(orderStatusReducer,[{}]);
+const [productsState,productAction] = useReducer(CartReducerFun,[{ID:1,NAME:"INIT",PRICE:"34",OFFERPRICE:32,UNITS:"5Kg",INSTOCK:"Y",INCART:false,QTY:0}]);
 const [deliveryState,deliveryAction] = useReducer(deliveryReducer,[inItDelivery]);
 const cartReducer = 1;
 const productCountReducer = (props) => productsState.filter(a => a.ID === props && a.QTY > 0).reduce((prev,curr) => prev + curr.QTY,0);
 const productCountAll = productsState.reduce((prev,curr) => prev + curr.QTY,0);
 const [orderCreated,setOrderCreated] = useState(false);
 const [pageHome,setPageHome]  = useState();
-// const deliveryCharges = 0;
 const deliveryCharges = (productCountAll < 5 && deliveryState[0].shipMode === "delivery" && deliveryState[0].location ? parseInt(JSON.parse(configState[0].val.filter( a => a.NAME === "DEL_LOCATIONS")[0].JSON_STRING).value.filter(a => a.name === deliveryState[0].location)[0].delCharge,10) : 0);
 const currency = configState[0].val ? JSON.parse(configState[0].val.filter( a => a.NAME === "CURRENCY")[0].JSON_STRING).value : "";
-// const selfAddress = JSON.parse(configState[0].val.filter( a => a.NAME === "DEL_LOCATIONS")[0].JSON_STRING).value;
-// const deliveryCharges1 = delCharges({productCountAll:productCountAll,shipMode:deliveryState[0].shipMode,location:deliveryState[0].location});
 
 useEffect( () => {
     GetApiData("select a.NAME,a.ID,UNITS,PRICE,OFFERPRICE,CASE WHEN INSTOCK='Y' and STOCK - ORDERED <= 1 THEN 'N' ELSE  INSTOCK END INSTOCK,ACTIVE from products a left outer join stock b on (a.NAME=b.name) order by INSTOCK desc,stock desc")
@@ -223,7 +166,6 @@ useEffect( () => {
                 // else{
                 // productAction({type:"GET_LATEST",state:res});
                 // }
-    
                 }
             }
         )
@@ -236,7 +178,7 @@ useEffect( () => {
         <>
         <ToastContainer position="top-center" autoClose="1000"/>
         {/* {configState[0].state !== "INIT" &&  */}
-        <productContext.Provider value={[productsState,productAction,cartReducer,productCountReducer,productCountAll,deliveryState,deliveryAction,orderCreated,setOrderCreated,pageHome,setPageHome,deliveryCharges,configState,currency]}>
+        <productContext.Provider value={[productsState,productAction,cartReducer,productCountReducer,productCountAll,deliveryState,deliveryAction,orderCreated,setOrderCreated,pageHome,setPageHome,deliveryCharges,configState,currency,orderStatus,orderStatusAction]}>
             {props.children}
         </productContext.Provider>
         </>

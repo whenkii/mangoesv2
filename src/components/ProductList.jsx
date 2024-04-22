@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext,useEffect,useState} from 'react'
 import styled from 'styled-components'
 import {RiShoppingBasketLine
     ,RiInformationLine
@@ -10,7 +10,8 @@ import {AllSpinners} from './Spinners';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTruck } from '@fortawesome/free-solid-svg-icons'
 import * as fasIcons from 'react-icons/fa'
-import { useEffect } from 'react';
+import { GetApiData } from '../components/ApiCalls';
+
 // import { ToastContainer } from 'react-toastify';
 
 export default function ProductList() {
@@ -25,7 +26,9 @@ const productNames = {Alphonso:["ఆల్పాన్సా/ఖాదర్","�
                       Kalepadu:["కాలేపాడు","कालेपाडु","காலேபாடு"],
                       ImamPasand:["ఇమామ్ పసంద్","इमाम पसंद","இமாம் பஸ்சந்த்","ಇಮಾಮ ಪಸಂದ್"]};
 const productColors = ["secondary","warning","info","dark"];
-// const imageName = require('../images/banginapalli_prod.jpeg');
+const [areaNames,setAreas]=useState({})
+const [loaded,setLoaded]=useState(false)
+
 
 const paymentDetails = configState[0].val ? JSON.parse(configState[0].val.filter( a => a.NAME === "PAYMENTINFO")[0].JSON_STRING).value:null;
 const {whatsappNo} = paymentDetails ? paymentDetails :123;
@@ -38,28 +41,65 @@ const currencySymb = currency === "SGD" ? "$" : "";
 useEffect( () => {
     setPageHome(true);
 })
-
+//Dont render on first load -- (I think so)
 useEffect( () => {
  return () =>  setPageHome(false);
 })
+
+useEffect( () => {
+    GetApiData("select * from react_config")
+    .then((res) => {
+        if (res[0] === "ERROR"){
+            alert("Error while getting data from DB");    
+        }
+        else if ( res.length === 0 )  {
+        alert("No Data found");
+        }
+        else if ( res.length > 0 ) {
+        const getDBValue = (props) => {
+                return JSON.parse(res.filter( a => a.NAME === props)[0].JSON_STRING).value
+            }
+        const initFormFields=getDBValue("SELF_LOCATIONS");
+        var formNamePostalCode = initFormFields.map(a => a.name + ' - '+ a.details[3])
+        setAreas([...formNamePostalCode])
+        setLoaded(true)
+            }
+        }
+    )
+    .catch ( (e) => {
+        alert(e)
+    })
+    },[loaded])
+
     return (
         <MainContainer className="container" 
         >
-            <div className="heading text-center">Pick your Mangoes</div>
-        { (pageHome || !pageHome) && 
+        <div className="heading text-center">Pick your Mangoes</div>
+        { ((pageHome || !pageHome) && loaded) && 
         <div className="d-flex justify-content-center">
-
             {productsState[0].NAME !== "INIT" &&
                 <div className="message-left">
                         <div className="text-center mt-1">
                             <FontAwesomeIcon icon={faTruck} className="truck"/>
                         </div>
-                        <div className="deliveryMess text-center mt-4"> Next Delivery</div>
+                        <div className="deliveryMess-head text-center mt-2"> Next Delivery</div>
                         <div className="deliveryMess text-center mt-4 text-warning"> {delDate}</div>
                         <div className="mt-4 text-center"> 
                             <div className="whatsapptext text-success"> <fasIcons.FaWhatsapp className="whatsapp" /> WhatsApp </div>
                             <div className="whatsapptext text-white" > {whatsappNo} </div> 
                         </div>
+                        <div className="deliveryMess-head text-center mt-4 mb-2"> Self-Collection Points</div>
+                            <div className="d-flex justify-content-center">         
+                        <div>
+                            {areaNames.map ((item,i) =>
+                                <div className="d-flex row text-white my-1" key={i}>
+                                    <span className="locList">{item}</span>
+                                </div>
+                            )
+                            }
+                        </div>
+                    </div>
+
 
                 </div>
             }
@@ -213,6 +253,15 @@ margin-bottom:7rem;
     color:var(--amzonChime);
     font-size:1.2rem;
 }
+.deliveryMess-head {
+    text-decoration:underline;
+    font-size:0.9rem;
+    color:white;
+    font-weight:bold;
+    margin-top:1rem;
+    text-align:center;
+    list-style-type: none;
+}
 .deliveryMess{
     font-size:0.9rem;
     color:white;
@@ -237,6 +286,10 @@ margin-bottom:7rem;
 .whatsapptext{
     font-size:0.8rem;
 }
+
+.locList{
+    font-size:0.75rem;
+}
 // removing Container for small screens
 @media (max-width: 798px) {
     padding:0;
@@ -258,6 +311,11 @@ margin-bottom:7rem;
         font-size:1.5rem;
         margin: 1rem 0.5rem;
     }
+    .deliveryMess-head{
+        font-size:0.5rem;
+        color:white;
+        font-weight:bold;
+    }
     .deliveryMess{
         font-size:0.5rem;
         color:white;
@@ -269,6 +327,9 @@ margin-bottom:7rem;
     .about {
         font-size:1.5rem;
         margin-top:1rem;
+    }
+    .locList{
+        font-size:0.5rem;
     }
 }
 `

@@ -8,13 +8,16 @@ import qrcode from '../images/Venkat_Paynow.jpeg'
 import * as fasIcons from 'react-icons/fa'
 import { ToastContainer,toast } from 'react-toastify';
 import {AllSpinners} from './Spinners';
+import axios from 'axios';
+import {config} from '../components/reactConfig'
 // import {config} from '../components/reactConfig'
 // import * as biIcons from 'react-icons/bi' 
 
 export default function Payment() {
 var navigate = useNavigate();
+const [isOrderProcessing,setOrderProcessing]=useState(false);
 // const [productsState,productAction]=useContext(productContext);
-const [productsState,productAction,,,,deliveryState,deliveryAction,,,,,deliveryCharges,configState,currency]=useContext(productContext);
+const [productsState,productAction,,,,deliveryState,deliveryAction,,,,,deliveryCharges,configState,currency,,orderStatusAction]=useContext(productContext);
 // const {shipMode} = deliveryState[0];
 const inCartItems = productsState.filter(a => a.QTY > 0);
 const [accountInfo] = useContext(accountsContext);
@@ -36,17 +39,64 @@ const funOnChange = (e) => {
 const createOrder = (e) => {
     e.preventDefault();
 
+    setOrderProcessing(true);
+
     // if (!accountInfo.isLoggedIn) {
     //     toast.error(`Login to complete the Order`); 
     //     navigate("/account")
     //  }
     // else {
         if (orderForm.paymentMode) {
-        
-        productAction({type:"CREATE_ORDER",accountInfo:accountInfo,orderid:orderId,deliveryDetails:{...deliveryState[0],paymentMode:orderForm.paymentMode,deliveryCharges:deliveryCharges}});
-        productAction({type:"CLEAR"});
-        deliveryAction({type:"CLEAR"});
-        navigate("/orderconfirmation",{state:{deliveryCharges:deliveryCharges,id:orderId}})
+            if (! productsState[0].DELMODE) {
+            var tempState     = [...productsState];
+
+            const deliveryDetails = {...deliveryState[0],paymentMode:orderForm.paymentMode,deliveryCharges:deliveryCharges}
+            //Get Required attributes for your Cart    
+            let getAttrState1 = tempState.map(i => 
+                ({ORDERID:orderId,
+                  EMAIL:accountInfo.email,
+                  PRODID:parseInt(i.ID,10),
+                  QTY:parseInt(i.QTY,10),
+                  PRICE:parseInt(i.OFFERPRICE,10),
+                  DELMODE:deliveryDetails.shipMode,
+                  ADDRESS:String(deliveryDetails.address),
+                  LOCATION:deliveryDetails.location,
+                  PAYMODE:deliveryDetails.paymentMode,
+                  DELIVERYCHARGES:deliveryDetails.deliveryCharges
+                }));
+
+        //Get products that are in cart only
+        let getAttrState = getAttrState1.filter(a => a.QTY > 0);
+        // For each record give attribute name as p_in as this is the naming convention in node.js code
+        getAttrState = getAttrState.map( a => ({p_in:a}));
+
+        const bindsVar = {scriptName:"PKG_ORDERS.CREATE_ORDER",recName : "PKG_ORDERS.createOrderRec",binds:getAttrState}
+        productAction({type:"ADD_ORDER_DETAILS"});
+        axios.post(`${config.restAPIserver}:${config.restAPIHost}/api/execProcDynamic`,bindsVar)
+        .then(({data,status}) => {
+            if ( ( status && status !== 200 ) || data !== "OK" ) {
+                // If order is not tracked thrown an error
+                toast.error(data)
+            }
+            else {
+                productAction({type:"RESET_INIT"});
+                productAction({type:"CLEAR"});
+                deliveryAction({type:"CLEAR"});
+                setOrderProcessing(false);
+                toast.success("Order has been placed");
+                navigate("/orderconfirmation",{state:{orderId:getAttrState1[0].ORDERID}});
+            }
+                    })
+        .catch((e) => {
+                // console.log(e);
+                productAction({type:"NO_CHANGE_2_STATE"});
+                toast.error(`Order creation failed`); 
+            })
+        // console.log(bindsVar)
+        // setProcParams({...bindsVar})
+        }
+        else 
+        toast.error(`Choose Delivery mode`); 
         }
         else {
             productAction({type:"BLANK_PAYEMENT_MODE"});
@@ -54,6 +104,7 @@ const createOrder = (e) => {
     // }
   }
 
+  
 const query = `select orders_seq.nextval seqid from dual`;
 
     useEffect(() => {
@@ -80,6 +131,10 @@ const query = `select orders_seq.nextval seqid from dual`;
   return (
     <Maincontainer className="container">
         <ToastContainer position="top-center" autoClose="1000"/>
+        {isOrderProcessing ?
+        <AllSpinners props="all"/>
+        :
+        <>
         {status === "ERROR" ?
                 <div className="d-flex justify-content-center mt-3">
                     <div className="btn btn-sm back-btn" onClick={() => navigate(-1)}>BACK <fasIcons.FaBackward className="icons" /> </div> 
@@ -88,7 +143,7 @@ const query = `select orders_seq.nextval seqid from dual`;
         <>
         {!isLoading ?
             <>
-            <div className="text-warning text-center mb-1 fw-bold">Order n-Progress</div>
+            <div className="text-warning text-center mb-1 fw-bold">Order In-Progress</div>
             <div className="progress mb-2">
                 <div className="progress-bar progress-bar-striped w-75 bg-warning" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
@@ -168,7 +223,8 @@ const query = `select orders_seq.nextval seqid from dual`;
         }
         </>
         }
-        
+    </>
+    }   
     </Maincontainer>
   )
 }
