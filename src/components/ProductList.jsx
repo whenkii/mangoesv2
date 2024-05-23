@@ -17,14 +17,16 @@ import { GetApiData } from '../components/ApiCalls';
 export default function ProductList() {
 const [productsState,productAction,,productCountReducer,,,,,,pageHome,setPageHome,,configState,currency] = useContext(productContext);
 const productNames = {Alphonso:["ఆల్పాన్సా/ఖాదర్","अल्फांसो","அல்பான்சோ","ಅಲ್ಫ್ನಸೋ"],
+                      AlphonsoJumbo:["ఆల్పాన్సా/ఖాదర్ Jmbo","अल्फांसो","அல்பான்சோ","ಅಲ್ಫ್ನಸೋ"],
                       Kesar:["Kesar","केसर","కేసర్","ಕೇಸರ್"],
                       Chandura:["Chandura","పుల్లూరా","चंदुरा"],
-                      Mixed:["Banginapalli","Kesar"],
+                      Mixed:["Banginapalli","Alphonso","Chandura"],
                       Banginapalli:["బంగినపల్లి/బేనీషా","बदामी","பங்கினப்பள்ளி","ಬಂಗಿನಾಂಪಲ್ಲಿ"],
                       Mallika:["మల్లికా","मल्लिका","மல்லிகா","ಮಲ್ಲಿಕಾ"],
                       Neelam:["నీలం","नीलम","நீலம்","ನೀಲಂ"],
                       Kalepadu:["కాలేపాడు","कालेपाडु","காலேபாடு"],
-                      ImamPasand:["ఇమామ్ పసంద్","इमाम पसंद","இமாம் பஸ்சந்த்","ಇಮಾಮ ಪಸಂದ್"]};
+                      ImamPasand:["ఇమామ్ పసంద్","इमाम पसंद","இமாம் பஸ்சந்த்","ಇಮಾಮ ಪಸಂದ್"],
+                      PeddaRasalu:["పెద్ద రసాలు","Juicy Mango"]};
 const productColors = ["secondary","warning","info","dark"];
 const [areaNames,setAreas]=useState({})
 const [loaded,setLoaded]=useState(false)
